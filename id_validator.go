@@ -79,8 +79,11 @@ func GetInfo(id string, strict bool) (IdInfo, error) {
 	}
 
 	// 生日
-	cst, _ := time.LoadLocation("Asia/Shanghai")
-	birthday, _ := time.ParseInLocation("20060102", code["birthdayCode"], cst)
+	cst, err := time.LoadLocation("Asia/Shanghai")
+	if err != nil{
+        cst = time.FixedZone("CST",8*3600)
+    }
+    birthday, _ := time.ParseInLocation("20060102", code["birthdayCode"], cst)
 
 	// 性别
 	sex := 1
